@@ -1,11 +1,41 @@
+#container {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 15px;
+    padding: 15px;
+}
+
+#book-form {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 10px
+}
+
+button {
+    padding: 0 15px;
+}
+
 #library-container {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
     gap: 15px;
-    padding: 15px;
 }
 
 .book-card {
     padding: 15px;
     border: 1px solid black;
+}
+
+.hidden {
+    display: none;
+}
+
+#book-form-dialog {
+    padding: 20px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+}
+
+.form-field {
+    margin-bottom: 10px;
 }

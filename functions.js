@@ -11,58 +11,109 @@ function Book(title, author, pages, read) {
         console.log(`${this.title} by ${this.author}, ${this.pages} pages, ${this.read ? "already read" : "not read yet"}`)
     }
 }
+const libraryContainer = document.getElementById("library-container");
 
-const book1 = new Book("The Hobbit", "J.R.R. Tolkien", 295, false);
-const book2 = new Book("To Kill a Mockingbird", "Harper Lee", 324, true);
-const book3 = new Book("1984", "George Orwell", 328, false);
-const book4 = new Book("Pride and Prejudice", "Jane Austen", 279, true);
-const book5 = new Book("The Great Gatsby", "F. Scott Fitzgerald", 180, false);
-const book6 = new Book("Moby Dick", "Herman Melville", 585, false);
-const book7 = new Book("War and Peace", "Leo Tolstoy", 1225, true);
-const book8 = new Book("Ulysses", "James Joyce", 730, false);
-const book9 = new Book("The Catcher in the Rye", "J.D. Salinger", 214, true);
-const book10 = new Book("The Odyssey", "Homer", 475, true);
+// Preloaded books 
+const preloadedBooks = [
+    new Book("The Hobbit", "J.R.R. Tolkien", 295, false),
+    new Book("To Kill a Mockingbird", "Harper Lee", 324, true),
+    new Book("1984", "George Orwell", 328, false),
+    new Book("Pride and Prejudice", "Jane Austen", 279, true),
+    new Book("The Great Gatsby", "F. Scott Fitzgerald", 180, false),
+    new Book("Moby-Dick", "Herman Melville", 585, false),
+    new Book("War and Peace", "Leo Tolstoy", 1225, true),
+    new Book("Ulysses", "James Joyce", 730, false),
+    new Book("The Catcher in the Rye", "J.D. Salinger", 214, true),
+    new Book("The Odyssey", "Homer", 475, true),
+    new Book("Brave New World", "Aldous Huxley", 268, false),
+    new Book("The Brothers Karamazov", "Fyodor Dostoevsky", 824, true),
+];
 
-function addBookToLibrary(book) {
-    myLibrary.push(book);
+preloadedBooks.forEach(book => myLibrary.push(book));
+displayBooks();
+
+
+function displayBooks() {
+    libraryContainer.innerHTML = "";  // Clear the container
+    for (const [index, book] of myLibrary.entries()) {
+        const bookCard = document.createElement("div");
+        bookCard.classList.add("book-card");
+        bookCard.setAttribute("id", `book-card-${index}`);
+
+        const title = document.createElement("p");
+        title.innerText = `Title: ${book.title}`;
+
+        const author = document.createElement("p");
+        author.innerText = `Author: ${book.author}`;
+
+        const pageCount = document.createElement("p");
+        pageCount.innerText = `Pages: ${book.pages}`;
+
+        const readStatus = document.createElement("p");
+        readStatus.innerText = book.read ? "Read" : "Not Read";
+
+        const removeBtn = document.createElement("button");
+        removeBtn.innerText = `Delete`;
+        removeBtn.setAttribute("id", `delete-card-${index}`)
+
+        bookCard.appendChild(title);
+        bookCard.appendChild(author);
+        bookCard.appendChild(pageCount);
+        bookCard.appendChild(readStatus);
+        bookCard.appendChild(removeBtn);
+
+        libraryContainer.appendChild(bookCard);
+    }
 }
 
-addBookToLibrary(book1);
-addBookToLibrary(book2);
-addBookToLibrary(book3);
-addBookToLibrary(book4);
-addBookToLibrary(book5);
-addBookToLibrary(book6);
-addBookToLibrary(book7);
-addBookToLibrary(book8);
-addBookToLibrary(book9);
-addBookToLibrary(book10);
+const addBookButton = document.getElementById("add-book");
 
 
-const libraryContainer = document.getElementById("library-container")
-for (const book of myLibrary) {
-    const bookCard = document.createElement("div");
-    bookCard.classList.add("book-card");
+const displayNewBookFormBtn = document.getElementById("display-new-book-form");
+const closeDialogBtn = document.getElementById("close-dialog");
+const bookForm = document.getElementById("book-form-dialog");
 
-    const title = document.createElement("p");
-    title.innerText = book.title;
+displayNewBookFormBtn.addEventListener("click", () => {
+    bookForm.showModal();
+});
 
-    const author = document.createElement("p");
-    author.innerText = book.author;
+displayNewBookFormBtn.addEventListener("click", () => {
+    bookFormDialog.showModal();
+});
 
-    const pageCount = document.createElement("p");
-    pageCount.innerText = book.pages;
+closeDialogBtn.addEventListener("click", () => {
+    bookFormDialog.close();
+});
 
-    const readStatus = document.createElement("p");
-    readStatus.innerText = book.read ? "already read" : "not read yet";
+addBookButton.addEventListener("click", (event) => {
+    event.preventDefault();  // Prevent form from auto-submitting
 
-    bookCard.appendChild(title);
-    bookCard.appendChild(author);
-    bookCard.appendChild(pageCount);
-    bookCard.appendChild(readStatus);
+    // Get form data
+    const title = document.getElementById("book-title").value;
+    const author = document.getElementById("book-author").value;
+    const pages = document.getElementById("book-pages").value;
+    const read = document.getElementById("book-read").checked;
 
-    libraryContainer.appendChild(bookCard);
-}
+    // Create new book and add it to the library
+    const newBook = new Book(title, author, pages, read);
+    myLibrary.push(newBook);
 
-const addBookButton = document.getElementById("#add-book");
+    // Update the library display and close the dialog
+    displayBooks();
+    bookForm.close();
 
+    // Reset the form fields
+    document.getElementById("book-form").reset();
+});
+
+libraryContainer.addEventListener("click", (event) => {
+    const target = event.target;
+
+    if (target.id.startsWith("delete-card")) {
+        const index = parseInt(target.id.replace("delete-card-", ""), 10);
+
+        myLibrary.splice(index, 1);
+
+        displayBooks();
+    }
+})
