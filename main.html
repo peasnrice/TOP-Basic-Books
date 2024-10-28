@@ -4,9 +4,25 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <script src="functions.js"></script>
+    <script src="functions.js" defer></script>
+    <link rel="stylesheet" href="style-reset.css">
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <h1>The Library</h1>
+    <div id="book-form">
+        <label>Title</label>
+        <input type="text" name="book-title" id="book-title">
+        <label>Author</label>
+        <input type="text" name="book-author" id="book-author">
+        <label>Number of pages</label>
+        <input type="text" name="book-pages" id="book-pages">
+        <button id="add-book" type="submit">Add Book</button>
+    </div>
+
+    <div id="library-container">
+        
+    </div>
     
 </body>
 </html>
