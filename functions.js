@@ -77,12 +77,8 @@ displayNewBookFormBtn.addEventListener("click", () => {
     bookForm.showModal();
 });
 
-displayNewBookFormBtn.addEventListener("click", () => {
-    bookFormDialog.showModal();
-});
-
 closeDialogBtn.addEventListener("click", () => {
-    bookFormDialog.close();
+    bookForm.close();
 });
 
 addBookButton.addEventListener("click", (event) => {
