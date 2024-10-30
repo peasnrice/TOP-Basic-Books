@@ -17,7 +17,7 @@ button {
 
 #library-container {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     gap: 15px;
 }
 
@@ -84,5 +84,12 @@ dialog[open] {
     /* Optional rounded corners */
     z-index: 1000;
     /* Ensures it’s above other elements */
+
+}
+
+.buttons {
+    display: flex;
+    gap: 1rem;
+    max-height: 30px;
 
 }
