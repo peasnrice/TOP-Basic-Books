@@ -51,15 +51,21 @@ function displayBooks() {
 
         const readStatus = document.createElement("p");
         readStatus.innerText = book.read ? "Read" : "Not Read";
+        readStatus.setAttribute("id", `read-status-${index}`)
 
         const removeBtn = document.createElement("button");
         removeBtn.innerText = `Delete`;
         removeBtn.setAttribute("id", `delete-card-${index}`)
 
+        const toggleReadBtn = document.createElement("button");
+        toggleReadBtn.innerText = "Toggle Read";
+        toggleReadBtn.setAttribute("id", `toggle-read-${index}`);
+
         bookCard.appendChild(title);
         bookCard.appendChild(author);
         bookCard.appendChild(pageCount);
         bookCard.appendChild(readStatus);
+        bookCard.appendChild(toggleReadBtn);
         bookCard.appendChild(removeBtn);
 
         libraryContainer.appendChild(bookCard);
@@ -112,4 +118,12 @@ libraryContainer.addEventListener("click", (event) => {
 
         displayBooks();
     }
+
+    if (target.id.startsWith("toggle-read")) {
+        const index = parseInt(target.id.replace("toggle-read-", ""), 10);
+        myLibrary[index].read = !myLibrary[index].read;
+
+        displayBooks();
+    }
+
 })
